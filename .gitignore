@@ -1,0 +1,20 @@
+.Rprofile
+.Rproj.user
+README_cache
+README.html
+inst/doc
+tests/testthat/twitter_tokens
+.Rapp.history
+.Rhistory
+.httr-oauth
+make.R
+.pkg-funs.R
+.DS_Store
+vignettes/*.R
+rtweet.sublime-project
+rtweet.sublime-workspace
+<<<<<<< HEAD
+
+=======
+docs
+>>>>>>> ea1a9e136867a3607a6ca8b50091dce7dfd27ebc
