@@ -16,14 +16,12 @@ Imports:
     magrittr (>= 1.5),
     tibble (>= 1.3.4),
     utils,
-    progress,
-    Rcpp
+    progress
 License: MIT + file LICENSE
 URL: https://github.com/mkearney/rtw
 BugReports: https://github.com/mkearney/rtw/issues
 Encoding: UTF-8
 Suggests:
-    knitr,
     testthat (>= 2.1.0)
 VignetteBuilder: knitr
 LazyData: yes
