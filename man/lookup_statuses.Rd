@@ -18,7 +18,7 @@ return object into data frame(s).}
 \item{token}{a twitter token.}
 }
 \value{
-A tibble of tweets data.
+A data.frame of tweets data.
 }
 \description{
 Returns data on up to 90,000 Twitter statuses. To return data on

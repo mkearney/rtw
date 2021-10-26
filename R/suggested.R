@@ -24,7 +24,7 @@ suggested_slugs <- function(lang = NULL, token = NULL) {
 #'   requested language. The language must be specified by the
 #'   appropriate two letter ISO 639-1 representation.
 #' @param parse Logical indicating whether to parse the returned data into
-#'   a tibble data frame. See details for more on the returned users data.
+#'   a data frame. See details for more on the returned users data.
 #' @param token a twitter token.
 #' @details Currently, this parsing process drops all
 #'   recursive (list) columns, which mostly means you are shorted some
@@ -123,8 +123,9 @@ slug_tbl <- function(x) {
     x$users$created_at <- format_date(x$users$created_at)
     ## rename to account_created_at
     names(x$users)[names(x$users) == "created_at"] <- "account_created_at"
-    ## convert to tibble
-    x <- tibble::as_tibble(x$users[vapply(x$users, is.atomic, FUN.VALUE = logical(1))])
+    ## convert to data.frame
+    x <- as_rtwibble(x$users[vapply(x$users, is.atomic, FUN.VALUE = logical(1),
+      USE.NAMES = FALSE)])
     ## rearrange so slug is first
     x[c(ncol(x), 1:(ncol(x) - 1L))]
   }

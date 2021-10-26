@@ -52,7 +52,7 @@
 #'
 #' }
 #'
-#' @return Tibble data frame of trends data for a given geographical area.
+#' @return data frame of trends data for a given geographical area.
 #' @family trends
 #' @export
 get_trends <- function(woeid = 1,
@@ -154,7 +154,7 @@ parse_trends <- function(x) {
   x$woeid <- woeid
   x$as_of <- as_of
   x$created_at <- created_at
-  tibble::as_tibble(x)
+  as_rtwibble(x)
 }
 
 var_or_na <- function(x) {
@@ -212,7 +212,7 @@ parse_trends_available <- function(x) {
                         stringsAsFactors = FALSE),
              stringsAsFactors = FALSE)
   names(p)[ncol(p)] <- "place_type"
-  tibble::as_tibble(p)
+  as_rtwibble(p)
 }
 
 

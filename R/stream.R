@@ -422,7 +422,7 @@ data_from_stream2 <- function(x, n = 10000L, n_max = -1L, ...) {
 #'   parse = FALSE
 #' )
 #'
-#' ## parse stream file into tibble data frame
+#' ## parse stream file into data frame
 #' rt <- parse_stream("theaanand.json")
 #' }
 #' @export
@@ -549,11 +549,11 @@ parse_streamlimit <- function(x) {
   x <- grep("^\\{\"limit", x, value = TRUE)
   x <- strsplit(x, ":|,|\"")
   x <- x[lengths(x) >= 7L]
-  tibble::tibble(
+  as_rtwibble(list(
     track = unlist(lapply(x, "[[", 7L)),
     timestamp = as.POSIXct(
       as.numeric(unlist(lapply(x, "[[", 12L))) / 1000, origin = "1970-01-01")
-  )
+  ))
 }
 
 stream_dir <- function() {

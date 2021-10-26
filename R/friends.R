@@ -72,7 +72,7 @@
 #'   however, this ordering is subject to unannounced change and eventual
 #'   consistency issues. While this remains true it is possible to iteratively build
 #'   friends lists for a user over time.
-#' @return A tibble data frame with two columns, "user" for name or ID of target
+#' @return A data frame with two columns, "user" for name or ID of target
 #'   user and "user_id" for follower IDs.
 #' @family ids
 #' @export
@@ -171,10 +171,10 @@ get_friends_ <- function(users,
         return(list(data.frame()))
       } else if (parse) {
         if (length(f[[i]][["ids"]]) == 0) {
-          f[[i]] <- tibble::as_tibble()
+          f[[i]] <- as_rtwibble()
         } else {
           nextcursor <- next_cursor(f)
-          f[[i]] <- tibble::as_tibble(
+          f[[i]] <- as_rtwibble(
             list(user = users[[i]], user_id = f[[i]][["ids"]]))
           attr(f[[i]], "next_cursor") <- nextcursor
         }
@@ -216,9 +216,9 @@ get_friends_ <- function(users,
     } else if (parse) {
       nextcursor <- f[["next_cursor"]]
       if (length(f[["ids"]]) == 0) {
-        f <- tibble::as_tibble()
+        f <- as_rtwibble()
       } else {
-        f <- tibble::as_tibble(
+        f <- as_rtwibble(
           list(user = users, user_id = f[["ids"]]))
         attr(f, "next_cursor") <- nextcursor
       }
@@ -397,23 +397,23 @@ parse_showfriendships <- function(x, source_user, target_user) {
   }
   if (has_name_(x, "source")) {
     src <- unlist(x$source)
-    src <- tibble::tibble(
+    src <- as_rtwibble(list(
       relationship = "source",
       user = target_user,
       variable = names(src),
       value = src
-    )
+    ))
   } else {
     src <- data.frame()
   }
   if (has_name_(x, "target")) {
     trg <- unlist(x$target)
-    trg <- tibble::tibble(
+    trg <- as_rtwibble(list(
       relationship = "target",
       user = source_user,
       variable = names(trg),
       value = trg
-    )
+    ))
   } else {
     trg <- data.frame()
   }

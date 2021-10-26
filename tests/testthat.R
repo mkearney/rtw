@@ -1,5 +1,5 @@
 library(testthat)
-library(rtweet)
+library(rtw)
 
-test_check("rtweet")
+test_check("rtw")
 

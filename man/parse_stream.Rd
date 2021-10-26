@@ -28,7 +28,7 @@ stream_tweets(
   parse = FALSE
 )
 
-## parse stream file into tibble data frame
+## parse stream file into data frame
 rt <- parse_stream("theaanand.json")
 }
 }

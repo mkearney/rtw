@@ -178,7 +178,7 @@ ts_data_ <- function(data, by = "days", trim = 0L, tz = "UTC") {
       stringsAsFactors = FALSE
     )
   }
-  df <- tibble::as_tibble(df)
+  df <- as_rtwibble(df)
   if (trim > 0L) {
     df <- trim_ts(df, trim)
   }

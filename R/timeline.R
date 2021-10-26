@@ -108,7 +108,7 @@ get_timeline_ <- function(user, n = 100, home = FALSE, ...) {
   }
   ## merge tweets data into one data frame
   rt <- do.call("rbind", rt)
-  ## return tibble (validate = FALSE makes it a bit faster)
+  ## return data.frame (validate = FALSE makes it a bit faster)
   as_tbl(rt)
 }
 

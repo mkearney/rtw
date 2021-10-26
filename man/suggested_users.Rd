@@ -22,7 +22,7 @@ appropriate two letter ISO 639-1 representation.}
 \item{slug}{required The short name of list or a category}
 
 \item{parse}{Logical indicating whether to parse the returned data into
-a tibble data frame. See details for more on the returned users data.}
+a data frame. See details for more on the returned users data.}
 
 \item{slugs}{Optional, one or more slugs returned by
 \code{\link{suggested_slugs}}. API rate limits this to 15 max (function

@@ -4,9 +4,7 @@ test_that("search_tweets returns tweets data and latlng", {
   skip_on_cran()
 
   n <- 50
-  token <- readRDS("twitter_tokens")
-  x <- search_tweets("test", n = n, type = "recent",
-    token = token, lang = "en")
+  x <- search_tweets("test", n = n, type = "recent", lang = "en")
   
   expect_equal(is.data.frame(x), TRUE)
   expect_named(x)
@@ -18,7 +16,7 @@ test_that("search_tweets returns tweets data and latlng", {
   expect_true(any(c("user_id", "friends_count") %in% names(x)))
 
   x <- search_tweets("lol", n = 300,
-                     include_rts = FALSE, token = token, lang = "en")
+                     include_rts = FALSE, lang = "en")
   x <- lat_lng(x)
 
   expect_equal(is.data.frame(x), TRUE)
@@ -32,10 +30,10 @@ test_that("search_tweets returns tweets data and latlng", {
   expect_true(any(c("user_id", "friends_count") %in% names(x)))
   expect_true(all(FALSE %in% x$is_retweet))
 
-  expect_error(search_tweets(c(1:10), verbose = FALSE, token = token))
+  expect_error(search_tweets(c(1:10), verbose = FALSE))
   expect_error(search_tweets("tweet", token = "token"))
-  expect_error(search_tweets("stats", type = "all", token = token))
-  expect_error(search_tweets("stats", type = "all", n = -1, token = token))
+  expect_error(search_tweets("stats", type = "all"))
+  expect_error(search_tweets("stats", type = "all", n = -1))
 
   expect_equal(nrow(users_data(letters)), 0L)
 

@@ -107,7 +107,7 @@ format_from_to_date <- function(x = NULL) {
 #'   \item \strong{profile_locality:} ~~ locality associated with profile
 #' }
 #'
-#' @return A tibble data frame of Twitter data
+#' @return A data frame of Twitter data
 #' @examples
 #'
 #' \dontrun{
@@ -209,7 +209,7 @@ search_fullarchive <- function(q, n = 100, fromDate = NULL, toDate = NULL,
 #'   \item \strong{profile_locality:} ~~ locality associated with profile
 #' }
 #'
-#' @return A tibble data frame of Twitter data
+#' @return A data frame of Twitter data
 #' @examples
 #'
 #' \dontrun{

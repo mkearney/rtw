@@ -98,6 +98,6 @@ join_rtweet <- function(x) {
 
 
 as_tbl <- function(x, ...) {
-  tibble::as_tibble(x, ...)
+  as_rtwibble(x, ...)
 }
 

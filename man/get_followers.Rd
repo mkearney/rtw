@@ -53,7 +53,7 @@ prints sleep times and followers gathered counts.}
 \item{token}{a twitter token.}
 }
 \value{
-A tibble data frame of follower IDs (one column named "user_id").
+A data frame of follower IDs (one column named "user_id").
 }
 \description{
 Returns a list of user IDs for the accounts following specified

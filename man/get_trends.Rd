@@ -41,7 +41,7 @@ included in returned trends.}
 trends data. Defaults to true.}
 }
 \value{
-Tibble data frame of trends data for a given geographical area.
+data frame of trends data for a given geographical area.
 }
 \description{
 Get Twitter trends data.

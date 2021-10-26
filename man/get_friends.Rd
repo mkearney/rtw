@@ -62,7 +62,7 @@ to create a Twitter token see the tokens vignette, i.e.,
 `vignettes("auth", "rtweet")` or see \code{?tokens}.}
 }
 \value{
-A tibble data frame with two columns, "user" for name or ID of target
+A data frame with two columns, "user" for name or ID of target
   user and "user_id" for follower IDs.
 }
 \description{

@@ -80,7 +80,7 @@
 #'
 #' }
 #'
-#' @return A tibble data frame of follower IDs (one column named "user_id").
+#' @return A data frame of follower IDs (one column named "user_id").
 #' @family ids
 #' @export
 get_followers <- function(user, n = 5000,

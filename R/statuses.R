@@ -26,7 +26,7 @@
 #'
 #' }
 #'
-#' @return A tibble of tweets data.
+#' @return A data.frame of tweets data.
 #' @family tweets
 #' @export
 lookup_statuses <- function(statuses, parse = TRUE, token = NULL) {

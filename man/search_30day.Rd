@@ -43,7 +43,7 @@ account), which is converted to a bearer token in order to make premium
 API requests}
 }
 \value{
-A tibble data frame of Twitter data
+A data frame of Twitter data
 }
 \description{
 Search Twitter's '30day' (PREMIUM) API

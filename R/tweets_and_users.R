@@ -1,7 +1,7 @@
-#' Parsing data into tweets/users data tibbles
+#' Parsing data into tweets/users data data.frames
 #'
 #' @param x Unparsed data returned by rtweet API request.
-#' @return A tweets/users tibble (data frame) with users/tweets tibble attribute.
+#' @return A tweets/users data.frame (data frame) with users/tweets data.frame attribute.
 #' @family parsing
 #' @family tweets
 #' @examples
@@ -9,13 +9,13 @@
 #' ## search with parse = FALSE
 #' rt <- search_tweets("rstats", n = 500, parse = FALSE)
 #'
-#' ## parse to tweets data tibble with users data attribute object
+#' ## parse to tweets data data.frame with users data attribute object
 #' tweets_with_users(rt)
 #'
 #' ## search with parse = FALSE
 #' usr <- search_users("rstats", n = 300, parse = FALSE)
 #'
-#' ## parse to users data tibble with users data attribute object
+#' ## parse to users data data.frame with users data attribute object
 #' users_with_tweets(usr)
 #'
 #' }

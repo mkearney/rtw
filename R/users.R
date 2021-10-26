@@ -31,7 +31,7 @@
 #'
 #' }
 #'
-#' @return A tibble of users data.
+#' @return A data.frame of users data.
 #' @family users
 #' @export
 lookup_users <- function(users, parse = TRUE, token = NULL) {
@@ -77,10 +77,10 @@ check_for_errors <- function(x) {
   if (identical(c("code", "message"), names(x))) {
     message("Error code: ", x$code)
     message(x$message)
-    return(tibble::as_tibble())
+    return(as_rtwibble())
   } else if (is.character(x)) {
     message(x)
-    return(tibble::as_tibble())
+    return(as_rtwibble())
   }
   x
 }

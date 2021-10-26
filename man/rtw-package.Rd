@@ -36,6 +36,6 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Michael W. Kearney \email{kearneymw@missouri.edu} (\href{https://orcid.org/0000-0002-0730-4694}{ORCID})
+\strong{Maintainer}: Michael W. Kearney \email{mike.wayne.kearney@gmail.com} (\href{https://orcid.org/0000-0002-0730-4694}{ORCID})
 
 }

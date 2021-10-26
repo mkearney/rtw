@@ -3,7 +3,7 @@
 \name{tweets_with_users}
 \alias{tweets_with_users}
 \alias{users_with_tweets}
-\title{Parsing data into tweets/users data tibbles}
+\title{Parsing data into tweets/users data data.frames}
 \usage{
 tweets_with_users(x)
 
@@ -13,23 +13,23 @@ users_with_tweets(x)
 \item{x}{Unparsed data returned by rtweet API request.}
 }
 \value{
-A tweets/users tibble (data frame) with users/tweets tibble attribute.
+A tweets/users data.frame (data frame) with users/tweets data.frame attribute.
 }
 \description{
-Parsing data into tweets/users data tibbles
+Parsing data into tweets/users data data.frames
 }
 \examples{
 \dontrun{
 ## search with parse = FALSE
 rt <- search_tweets("rstats", n = 500, parse = FALSE)
 
-## parse to tweets data tibble with users data attribute object
+## parse to tweets data data.frame with users data attribute object
 tweets_with_users(rt)
 
 ## search with parse = FALSE
 usr <- search_users("rstats", n = 300, parse = FALSE)
 
-## parse to users data tibble with users data attribute object
+## parse to users data data.frame with users data attribute object
 users_with_tweets(usr)
 
 }

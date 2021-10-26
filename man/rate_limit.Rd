@@ -19,7 +19,7 @@ console).}
 \item{query}{Specific API (path) or a character function name,
 e.g., query = "get_timeline", used to subset the returned data.
 If null, this function returns entire rate limit request object
-as a tibble data frame. Otherwise, query returns specific values
+as a data frame. Otherwise, query returns specific values
 matching the query of interest; e.g., query = "lookup/users"
 returns remaining limit for user lookup requests; type =
 "followers/ids" returns remaining limit for follower id requests;
@@ -30,7 +30,7 @@ requests.}
 into a data frame.}
 }
 \value{
-Tibble data frame with rate limit information pertaining to
+data frame with rate limit information pertaining to
   the limit (max allowed), remaining (specific to token), reset
   (minutes until reset), and reset_at (time of rate limit
   reset). If query is specified, only relevant rows are returned.
