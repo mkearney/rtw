@@ -76,10 +76,11 @@ make_url <- function(restapi = TRUE, query, param = NULL) {
 ##----------------------------------------------------------------------------##
 ##                                   scroll                                   ##
 ##----------------------------------------------------------------------------##
+
 add_next_page_attr <- function(x) {
   if (length(x) == 0) return(x)
   if (inherits(x, "response")) {
-    np <- httr::content(x)[["next"]]
+    np <- from_js(x)[["next"]]
   } else if (isTRUE("next" %in% names(x))) {
     np <- x[["next"]]
   }
@@ -97,6 +98,7 @@ get_next_page <- function(x) {
     x[["next"]]
   }
 }
+
 
 scroller <- function(url, n, n.times, type = NULL, ..., verbose = TRUE, safedir = NULL) {
   ## check args
@@ -125,7 +127,7 @@ scroller <- function(url, n, n.times, type = NULL, ..., verbose = TRUE, safedir 
   for (i in seq_along(x)) {
     if (verbose) pb$tick()
 
-    x[[i]] <- httr::GET(url, ...)
+    x[[i]] <- .GET(url, ...)
     warn_for_twitter_status(x[[i]])
     ## send GET request
     if (type %in% c("premium", "fullarchive", "30day") && !is.null(safedir)) {
@@ -135,10 +137,6 @@ scroller <- function(url, n, n.times, type = NULL, ..., verbose = TRUE, safedir 
       saveas <- paste0(format(Sys.time(), "%Y%m%d%H%M%S"), "-", i, ".rds")
       saveRDS(x[[i]], file.path(safedir, saveas))
     }
-
-    # if (type %in% c("premium", "fullarchive", "30days")) {
-    #   x[[i]] <- add_next_page_attr(x[[i]])
-    # }
 
     ## if NULL (error) break
     if (is.null(x[[i]])) break
@@ -412,14 +410,17 @@ is_url <- function(url) {
 
 
 #' @importFrom jsonlite fromJSON
-from_js <- function(rsp) {
-  stopifnot(is_response(rsp))
-  if (!is_json(rsp)) {
-    stop("API did not return json", call. = FALSE)
-  }
-  rsp <- httr::content(rsp, as = "text", encoding = "UTF-8")
-  jsonlite::fromJSON(rsp)
+from_js <- function(x) {
+  jsonlite::fromJSON(rawToChar(x[["content"]]))
 }
+# from_js <- function(rsp) {
+#   stopifnot(is_response(rsp))
+#   if (!is_json(rsp)) {
+#     stop("API did not return json", call. = FALSE)
+#   }
+#   rsp <- httr::content(rsp, as = "text", encoding = "UTF-8")
+#   jsonlite::fromJSON(rsp)
+# }
 
 na_omit <- function(x) {
   if (is.atomic(x)) {

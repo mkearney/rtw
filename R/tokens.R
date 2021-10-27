@@ -82,9 +82,9 @@ get_token <- function() {
     access = "https://api.twitter.com/oauth/access_token"
   )
   sign = function(method, url) {
-    oauth <- httr::oauth_signature(url, method,
-      app, token_secret = access_secret, token = access_token)
-    c(structure(list(url = url), class = "request"), httr::oauth_header(oauth))
+    oauth <- oauth_sign(url, method,
+      app, token_secret = access_secret, token_key = access_token)
+    c(structure(list(url = url), class = "request"), oauth_header(oauth))
   }
   refresh <- function() stop("not implemented")
   can_refresh <- function() FALSE

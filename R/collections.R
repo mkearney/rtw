@@ -40,7 +40,7 @@ lookup_collections <- function(id, n = 200,
   )
   url <- make_url(query = query, param = params)
   token <- check_token(token)
-  r <- httr::GET(url, token)
+  r <- .GET(url, token)
   warn_for_twitter_status(r)
   if (r$status_code == 200L && parse) {
     r <- from_js(r)
@@ -115,7 +115,7 @@ get_collections <- function(user,
   }
   url <- make_url(query = query, param = params)
   token <- check_token(token)
-  r <- httr::GET(url, token)
+  r <- .GET(url, token)
   warn_for_twitter_status(r)
   if (r$status_code == 200L && parse) {
     r <- from_js(r)

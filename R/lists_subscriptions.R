@@ -99,7 +99,7 @@ lists_subscriptions_call <- function(user,
   url <- make_url(query = query, param = params)
 
   ## request
-  r <- httr::GET(url, token)
+  r <- .GET(url, token)
 
   ## check status
   warn_for_twitter_status(r)

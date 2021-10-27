@@ -27,7 +27,7 @@ lists_users <- function(user, reverse = FALSE, token = NULL, parse = TRUE) {
   names(params)[1] <- .id_type(user)
   token <- check_token(token)
   url <- make_url(query = query, param = params)
-  r <- httr::GET(url, token)
+  r <- .GET(url, token)
   if (parse) {
     r <- from_js(r)
     r <- as_lists_users(r)

@@ -94,7 +94,7 @@ lists_statuses_ <- function(list_id = NULL,
   }
   token <- check_token(token)
   url <- make_url(query = query, param = params)
-  r <- httr::GET(url, token)
+  r <- .GET(url, token)
   from_js(r)
 }
 
