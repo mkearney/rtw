@@ -74,7 +74,7 @@ lists_members <- function(list_id = NULL,
   }
   token <- check_token(token)
   url <- make_url(query = query, param = params)
-  r <- httr::GET(url, token)
+  r <- .GET(url, token)
   warn_for_twitter_status(r)
   if (r$status_code != 200L) {
     return(data.frame())

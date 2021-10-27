@@ -27,7 +27,7 @@ get_retweets <- function(status_id, n = 100, parse = TRUE, token = NULL, ...) {
   )
   token <- check_token(token)
   url <- make_url(query = query, param = params)
-  r <- httr::GET(url, token)
+  r <- .GET(url, token)
   if (parse) {
     r <- from_js(r)
     r <- tweets_with_users(r)
@@ -100,7 +100,7 @@ get_retweeters_call <- function(status_id,
   )
   token <- check_token(token)
   url <- make_url(query = query, param = params)
-  r <- httr::GET(url, token)
+  r <- .GET(url, token)
   if (parse) {
     r <- from_js(r)
     if (has_name_(r, "next_cursor_str")) {
@@ -112,7 +112,7 @@ get_retweeters_call <- function(status_id,
     r <- as.data.frame(r)
     attr(r, "next_cursor") <- next_cursor
   } else {
-    rr <- httr::content(r)
+    rr <- from_js(r)
     if (has_name_(rr, "next_cursor_str")) {
       next_cursor <- rr$next_cursor_str
     } else {

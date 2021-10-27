@@ -11,7 +11,7 @@ suggested_slugs <- function(lang = NULL, token = NULL) {
   token <- check_token(token)
   params <- list(lang = lang)
   url <- make_url(query = query, param = params)
-  r <- httr::GET(url, token)
+  r <- .GET(url, token)
   warn_for_twitter_status(r)
   from_js(r)
 }
@@ -69,7 +69,7 @@ suggested_users <- function(slug, lang = NULL, parse = TRUE, token = NULL) {
   token <- check_token(token)
   params <- list(slug = slug, lang = lang)
   url <- make_url(query = query, param = params)
-  d <- httr::GET(url, token)
+  d <- .GET(url, token)
   warn_for_twitter_status(d)
   d <- from_js(d)
   if (parse) {

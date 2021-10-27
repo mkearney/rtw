@@ -39,7 +39,6 @@ bearer_token <- function(token = NULL) {
   if (is.null(bearer)) {
     stop("couldn't find bearer token")
   }
-  #r <- httr::add_headers(Authorization = paste0("Bearer ", bearer$access_token))
   r <- request(headers = c(Authorization = paste0("Bearer ", bearer$access_token)) )
   structure(r, bearer = bearer, class = c("bearer", "list"))
 }

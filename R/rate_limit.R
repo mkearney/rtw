@@ -145,9 +145,9 @@ rate_limit_ <- function(token,
     restapi = TRUE,
     query = "application/rate_limit_status")
   if (inherits(token, "bearer")) {
-    r <- TWIT(get = TRUE, url, token)
+    r <- .uGET(url, token)
   } else {
-    r <- TWIT(get = TRUE, url, config = token)
+    r <- .uGET(url, token)
   }
   warn_for_twitter_status(r)
   r <- from_js(r)

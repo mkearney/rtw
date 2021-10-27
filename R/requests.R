@@ -45,6 +45,19 @@ nonce <- function(length = 10) {
   curl::curl_fetch_memory(url, handle = handle)
 }
 
+.uGET <- function(url, token = NULL, ...) {
+  if (is.list(url)) {
+    url <- buildq(url)
+  }
+  cnf <- request(auth_token = token)
+  req <- request("GET", url, auth_token = cnf)
+  signed_req <- token$sign(req$method, req$url)
+  req <- c(req, signed_req)
+  handle <- curl::new_handle()
+  curl::handle_setheaders(handle, .list = req$headers)
+  on.exit(curl::handle_reset(handle), add = TRUE)
+  curl::curl_fetch_memory(url, handle = handle)
+}
 normalize_params <- function(url, params) {
   urls <- sub("[^?]+\\??", "", url)
   urls <- strsplit(urls, "&")[[1]]

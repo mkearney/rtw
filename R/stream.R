@@ -124,7 +124,6 @@
 #'
 #' @return Tweets data returned as data frame with users data as attribute.
 #' @family stream tweets
-#' @importFrom httr POST write_disk add_headers progress timeout
 #' @export
 stream_tweets <- function(q = "",
                           timeout = 30,
@@ -194,13 +193,9 @@ stream_tweets <- function(q = "",
   stop_time <- Sys.time() + timeout
   ctr <- 0
   while (timeout > 0) {
-    r <- tryCatch(httr::POST(
-      url = url,
-      httr::config(token = token, timeout = timeout),
-      httr::write_stream(write_fun(con)),
-      httr::add_headers(Accept = "application/json"),
-      httr::add_headers(`Accept-Encoding` = "gzip, deflate")),
-      error = function(e) return(e))
+    r <- tryCatch(.POST_stream(url, token = token, timeout = timeout, 
+      file_name = file_name))
+    return(r)
     timeout <- as.numeric(difftime(stop_time, Sys.time(), units = "secs"))
     if (timeout > 0) {
       ctr <- ctr + 1
@@ -240,6 +235,35 @@ is_user_ids <- function(x) {
     x <- strsplit(x, "\\,")[[1]]
   }
   isTRUE(all(!is.na(suppressWarnings(as.numeric(x)))))
+}
+
+.POST_stream <- function(url, token, timeout = 5, file_name) {
+  options(encoding = "UTF-8")
+  con <- file(file_name, "w")
+  wf1 <- function(x) writeLines(rawToChar(x), con)
+  wff <- `class<-`(wf1, c("write_function", "function"))
+  req <- request("POST", buildq(url),
+    auth_token = token,
+    options = list(timeout = timeout),
+    headers = c(`Content-Type` = "", Accept = "application/json", 
+      `Accept-Encoding` = "gzip, deflate"),
+    output = wff)
+  signed_req <- token$sign("GET", req$url)
+  req <- c(req, signed_req)
+  handle <- curl::new_handle()
+  curl::handle_setopt(handle, .list = req$options)
+  curl::handle_setheaders(handle, .list = req$headers)
+  s <- tryCatch(curl::curl_fetch_stream(req$url, req$output, handle = handle),
+    error = function(e) NULL)
+  close(con)
+  con <- file(file_name, "r")
+  x <- scan(con, character(), sep = "\n", skipNul = TRUE, quiet = TRUE)
+  close(con)
+  x <- grep("^\\{\"created.*timestamp_ms\":\"\\d+\"\\}$", x, value = TRUE)
+  on.exit(unlink(file_name), add = TRUE)
+  tryCatch(tweets_with_users(jsonlite::fromJSON(paste0('[',
+    paste0(x, collapse = ","), ']'))),
+    error = function(e) data.frame())
 }
 
 stream_params <- function(stream, ...) {

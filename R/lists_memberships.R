@@ -113,7 +113,7 @@ lists_memberships_call <- function(user,
   }
   token <- check_token(token)
   url <- make_url(query = query, param = params)
-  r <- httr::GET(url, token)
+  r <- .GET(url, token)
   warn_for_twitter_status(r)
   if (r$status_code != 200L) {
     return(data.frame())
