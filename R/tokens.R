@@ -16,23 +16,6 @@ compact <- function (x) {
   x[!empty]
 }
 
-request <- function (method = NULL, url = NULL, headers = NULL, fields = NULL,
-  options = NULL, auth_token = NULL, output = NULL) {
-  if (!is.null(method))
-    stopifnot(is.character(method), length(method) == 1)
-  if (!is.null(url))
-    stopifnot(is.character(url), length(url) == 1)
-  if (!is.null(headers))
-    stopifnot(is.character(headers))
-  if (!is.null(fields))
-    stopifnot(is.list(fields))
-  if (!is.null(output))
-    stopifnot(inherits(output, "write_function"))
-  structure(list(method = method, url = url, headers = keep_last(headers),
-    fields = fields, options = compact(keep_last(options)),
-    auth_token = auth_token, output = output), class = "request")
-}
-
 #' Fetching Twitter authorization token(s).
 #'
 #' Call function used to fetch and load Twitter OAuth tokens.
@@ -84,13 +67,13 @@ get_token <- function() {
   sign = function(method, url) {
     oauth <- oauth_sign(url, method,
       app, token_secret = access_secret, token_key = access_token)
-    c(structure(list(url = url), class = "request"), oauth_header(oauth))
+    req_concat(request(url = url), oauth_header(oauth))
   }
   refresh <- function() stop("not implemented")
   can_refresh <- function() FALSE
   clone <- function() structure(token, class = c("rtweet_token", "Token"))
-  token <- list(app = app, credentials = credentials, endpoint = endpoint, 
-    sign = sign, 
+  token <- list(app = app, credentials = credentials, endpoint = endpoint,
+    sign = sign,
     clone = clone, refresh = refresh, can_refresh = can_refresh)
   structure(token, class = c("rtweet_token", "Token"))
 }

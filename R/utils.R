@@ -25,14 +25,13 @@
 #'   the most part, or at least for any function-specific requests
 #'   (e.g., \code{get_friends}, take reflect these changes.
 #' @return json response object
-#' @importFrom httr POST
 #' @keywords internal
 #' @noRd
 TWIT <- function(get = TRUE, url, ...) {
   if (get) {
     .GET(url, ...)
   } else {
-    POST(url, ...)
+    .GET(url, ...)
   }
 }
 

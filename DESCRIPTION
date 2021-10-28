@@ -14,8 +14,7 @@ Imports:
     utils,
     progress,
     curl,
-    openssl,
-    httr
+    openssl
 License: MIT + file LICENSE
 URL: https://github.com/mkearney/rtw
 BugReports: https://github.com/mkearney/rtw/issues

@@ -193,7 +193,7 @@ stream_tweets <- function(q = "",
   stop_time <- Sys.time() + timeout
   ctr <- 0
   while (timeout > 0) {
-    r <- tryCatch(.POST_stream(url, token = token, timeout = timeout, 
+    r <- tryCatch(.POST_stream(url, token = token, timeout = timeout,
       file_name = file_name))
     return(r)
     timeout <- as.numeric(difftime(stop_time, Sys.time(), units = "secs"))
@@ -245,11 +245,11 @@ is_user_ids <- function(x) {
   req <- request("POST", buildq(url),
     auth_token = token,
     options = list(timeout = timeout),
-    headers = c(`Content-Type` = "", Accept = "application/json", 
+    headers = c(`Content-Type` = "", Accept = "application/json",
       `Accept-Encoding` = "gzip, deflate"),
     output = wff)
   signed_req <- token$sign("GET", req$url)
-  req <- c(req, signed_req)
+  req <- req_concat(req, signed_req)
   handle <- curl::new_handle()
   curl::handle_setopt(handle, .list = req$options)
   curl::handle_setheaders(handle, .list = req$headers)
