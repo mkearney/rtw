@@ -5,7 +5,7 @@ A lite version of [{rtweet}](https://github.com/ropensci/rtweet)
 
 
 ```r
-## search for most recent tweets
+> ## search for most recent tweets
 > twts <- rtw::search_tweets("filter:verified OR -filter:verified", n = 200)
 Downloading [=========================================] 100%
 ```
@@ -13,7 +13,7 @@ Downloading [=========================================] 100%
 Tibble-like replacement for printing purposes
 
 ```r
-## print data (auto-truncates)
+> ## print data (auto-truncates)
 > twts
 ## # rtwibble (183 x 90)
 ##             created_at     screen_name                              text ...
