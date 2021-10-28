@@ -1,6 +1,3 @@
----
-output: github_document
----
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -14,7 +11,8 @@ twts <- rtw::search_tweets("filter:verified OR -filter:verified", n = 200)
 ```
 
 ```
-## Downloading [=========================================] 100%
+##
+Downloading [=========================================] 100%
 ```
 
 ```r
