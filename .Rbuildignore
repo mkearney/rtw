@@ -27,3 +27,4 @@
 ^codemeta\.json$
 ^\.gitattributes$
 
+^\.working\.R$

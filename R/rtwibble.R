@@ -46,11 +46,11 @@ print.rtwibble <- function(x, n = 10, ...) {
   invisible(x)
 }
 
-
+#' @importFrom utils object.size
 calc_width <- function(x) {
   char <- nchar(x)
   uncd <- log1p(count_unicode(x))
-  size <- sapply(x, object.size, USE.NAMES = FALSE)
+  size <- sapply(x, utils::object.size, USE.NAMES = FALSE)
   -2.469e-03 * char +
     1.479e-03 * size +
     -1.329e-02 * uncd +
