@@ -18,16 +18,16 @@
 #' @param apikey A valid Google Maps API key. If NULL, `lookup_coords()` will
 #'   look for a relevant API key stored as an environment variable (e.g.,
 #'   `GOOGLE_MAPS_KEY`).
-#' @details Since Google Maps implemented stricter API requirements, sending 
+#' @details Since Google Maps implemented stricter API requirements, sending
 #'   requests to Google's API isn't very convenient. To enable basic uses
 #'   without requiring a Google Maps API key, a number of the major cities
-#'   throughout the word and the following two larger locations are 
+#'   throughout the word and the following two larger locations are
 #'   baked into this function: 'world' and 'usa'. If 'world' is supplied then
 #'   a bounding box of maximum latitutde/longitude values, i.e.,
-#'   \code{c(-180, -90, 180, 90)}, and a center point \code{c(0, 0)} are 
-#'   returned. If 'usa' is supplied then estimates of the United States' 
+#'   \code{c(-180, -90, 180, 90)}, and a center point \code{c(0, 0)} are
+#'   returned. If 'usa' is supplied then estimates of the United States'
 #'   bounding box and mid-point are returned. To specify a city, provide the
-#'   city name followed by a space and then the US state abbreviation or 
+#'   city name followed by a space and then the US state abbreviation or
 #'   country name. To see a list of all included cities
 #' @param ... Additional arguments passed as parameters in the HTTP
 #'   request
@@ -126,14 +126,6 @@ find_google_geocode_key <- function() {
     p <- grep("GOOGLE.*KEY", evs, ignore.case = TRUE)
     p <- p[length(p)]
     key <- Sys.getenv(evs[p])
-  } else if (interactive()) {
-    yn <- menuline("lookup_coords() requires a Google Maps API key (for instructions on how to acquire one, see: https://developers.google.com/maps/documentation/javascript/tutorial), Do you have a Google Maps API key you'd like to use?", c("Yes", "No"))
-    if (yn == 2) {
-      stop("sorry, lookup_coords() requires a Google Maps API key")
-    }
-    key <- readline("Please enter your Google Maps API key:")
-    key <- gsub("\\s+|\"|'", "", key)
-    set_renv(GOOGLE_MAPS_KEY = key)
   } else {
     key <- ""
   }

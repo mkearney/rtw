@@ -40,9 +40,7 @@ older than) or equal to the specified ID.}
 
 \item{include_rts}{optional When set to either true, t or 1,
 the list timeline will contain native retweets (if they exist) in
-addition to the standard stream of tweets. The output format of
-retweeted tweets is identical to the representation you see in
-home_timeline.}
+addition to the standard stream of tweets.}
 
 \item{parse}{Logical indicating whether to convert the response object into
 an R list. Defaults to TRUE.}
