@@ -16,24 +16,24 @@ progress_bar <- function(its, fmt = "Working", width = getOption("width")) {
             i <- i + 1L
             assign("i", i, envir = .pb)
 
-            ## calculate percent complete
+            ## calculate progress and estimate time remaining
             N <- get("N", envir = .pb)
             pb_int <- get("pb_int", envir = .pb)
-
-            ## if > previous pb_pct then add to bar
             pb_start_time <- get("pb_start_time", envir = .pb)
-            s <- as.numeric(difftime(Sys.time(), pb_start_time,
-                units = "secs"))
+            s <- as.numeric(difftime(Sys.time(), pb_start_time, units = "secs"))
             pb_secs_per <- s / i
             pb_secs_tot <- pb_secs_per * N
             pb_secs_rmn <- as.integer(pb_secs_tot - s)
 
-            msg <- paste(fmt, paste(rep("=", floor(pb_int * i)), collapse = ""))
+            ## build message, evaluate expression, print time remaining
+            msg <- paste(fmt,
+              paste(rep("=", ceiling(pb_int * i)), collapse = ""))
             width <- get("width", envir = .pb)
             x <- pb_tick(expr, msg = msg, secs = pb_secs_rmn, width = width)
-            pb_clear_line(0)
             if (i >= N) {
                 pb_clear_line(width)
+            } else {
+                pb_clear_line(1)
             }
             x
         }
