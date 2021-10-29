@@ -12,7 +12,6 @@ Depends:
 Imports:
     jsonlite (>= 0.9.22),
     utils,
-    progress,
     curl,
     openssl
 License: MIT + file LICENSE

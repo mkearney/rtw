@@ -113,16 +113,23 @@ scroller <- function(url, n, n.times, type = NULL, ..., verbose = TRUE, safedir 
   }
 
   if (verbose) {
-    pb <- progress::progress_bar$new(
-      format = "Downloading [:bar] :percent",
-      total = n.times, clear = FALSE, width = 60
+    pb <- progress_bar(
+      n.times,
+      fmt = "Downloading",
+      width = 60
     )
-    pb$tick(0)
   }
   for (i in seq_along(x)) {
-    if (verbose) pb$tick()
+    if (verbose) {
+      x[[i]] <- pb$tick(.GET(url, ...))
+      if (i == length(x) || NROW(x[[i]]) == 0) {
+        pb_clear_line(getOption("width"))
+      }
+    } else {
+      x[[i]] <- .GET(url, ...)
+    }
 
-    x[[i]] <- .GET(url, ...)
+
     warn_for_twitter_status(x[[i]])
     ## send GET request
     if (type %in% c("premium", "fullarchive", "30day") && !is.null(safedir)) {
