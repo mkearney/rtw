@@ -115,16 +115,17 @@ scroller <- function(url, n, n.times, type = NULL, ..., verbose = TRUE, safedir 
   if (verbose) {
     pb <- progress_bar(
       n.times,
-      fmt = "Downloading",
-      width = 60
+      fmt = "downloading",
+      width = as.integer(max(c(getOption("width") * 0.85, 10)))
     )
+    on.exit(pb_end(), add = TRUE)
   }
   for (i in seq_along(x)) {
     if (verbose) {
       x[[i]] <- pb$tick(.GET(url, ...))
-      if (i == length(x) || NROW(x[[i]]) == 0) {
-        pb_clear_line(getOption("width"))
-      }
+      #if (i == length(x) || NROW(x[[i]]) == 0) {
+      #  pb_clear_line(getOption("width"))
+      #}
     } else {
       x[[i]] <- .GET(url, ...)
     }
