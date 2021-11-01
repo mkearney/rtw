@@ -7,8 +7,7 @@ A lite version of [{rtweet}](https://github.com/ropensci/rtweet)
 printing class.
 
 ``` R
-> ## search for most recent tweets
-> rtw::search_tweets("lang:en", n = 200)
+> rtw::search_tweets("lang:en filter:verified min_retweets:1000", n = 200)
 ..downloading..    ―――――――――――――――――――――――――――――――――――――――――――――――――――――   1s
 # rtwibble (200 x 90)
             created_at     screen_name                                text ...
