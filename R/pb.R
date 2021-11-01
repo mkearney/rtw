@@ -47,9 +47,9 @@ progress_bar <- function(its, fmt = "Working", width = NULL) {
     .pb <- new.env()
     assign("i", 0L, envir = .pb)
     assign("N", its, envir = .pb)
-    fmt <- paste0("..", fmt, "..", hspaces(max(c(1, 14 - nchar(fmt)))))
+    fmt <- paste0("..", fmt, ".. ")
     mwidth <- width - nchar(fmt)
-    bar_width <- width - nchar(fmt) - 4L
+    bar_width <- width - nchar(fmt) - 6L
     assign("width", width, envir = .pb)
     pb_int <- bar_width / its
     assign("pb_int", pb_int, envir = .pb)
@@ -59,10 +59,13 @@ progress_bar <- function(its, fmt = "Working", width = NULL) {
             ## update iterator
             i <- get("i", envir = .pb)
             i <- i + 1L
+            N <- get("N", envir = .pb)
+            if (i > N) {
+                i <- N
+            }
             assign("i", i, envir = .pb)
 
             ## calculate progress and estimate time remaining
-            N <- get("N", envir = .pb)
             pb_int <- get("pb_int", envir = .pb)
             pb_start_time <- get("pb_start_time", envir = .pb)
             s <- as.numeric(difftime(Sys.time(), pb_start_time, units = "secs"))
@@ -79,8 +82,8 @@ progress_bar <- function(its, fmt = "Working", width = NULL) {
                 cat(msg)
             } else {
                 cat(msg)
-                pb_clear_line(0)
             }
+            pb_clear_line(0)
             x
         }
     )
