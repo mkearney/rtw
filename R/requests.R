@@ -68,9 +68,11 @@ nonce <- function(length = 10) {
     url <- buildq(url)
   }
   req <- request("GET", url, auth_token = token)
-  if (!is.null(token)) {
+  if (!is.null(token) && "sign" %in% names(token)) {
     signed_req <- token$sign(req$method, req$url)
     req <- req_concat(req, signed_req)
+  } else if (!is.null(token)) {
+    req <- req_concat(req, token)
   }
   handle <- curl::new_handle()
   curl::handle_setheaders(handle, .list = req$headers)

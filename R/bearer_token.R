@@ -1,6 +1,41 @@
 
 
+http_req <- function(x) {
+  handle <- curl::new_handle()
+  if ("options" %in% names(x)) {
+    curl::handle_setopt(handle, .list = x[["options"]])
+  }
+  if ("fields" %in% names(x)) {
+    curl::handle_setform(handle, .list = x[["fields"]])
+  }
+  if ("headers" %in% names(x)) {
+    curl::handle_setheaders(handle, .list = x[["headers"]])
+  }
+  on.exit(curl::handle_reset(handle), add = TRUE)
+  curl::curl_fetch_memory(x[["url"]], handle = handle)
+}
 
+create_bearer_token <- function(token = NULL) {
+  if (is.null(token)) {
+    token <- get_token()
+  }
+  app_keys <- openssl::base64_encode(
+    paste0(get_app_key(token), ":", get_app_secret(token))
+  )
+  req <- list(
+    url = "https://api.twitter.com/oauth2/token",
+    headers = c(Accept = "application/json, text/xml, application/xml, */*",
+      Authorization = paste0("Basic ",  app_keys)),
+    fields = c(grant_type = "client_credentials"),
+    options = list(post = 1L)
+  )
+  r <- http_req(req)
+  bearer <- from_js(r)
+  bearer_env <- new.env()
+  assign(".bearer_env", bearer_env, envir = .state)
+  assign("bearer", bearer, envir = bearer_env)
+  invisible()
+}
 #' Bearer token
 #'
 #' Convert default token into bearer token for application only (user-free)
@@ -45,6 +80,10 @@ bearer_token <- function(token = NULL) {
 
 
 get_bearer <- function(token = NULL) {
+  ## create if necessary
+  if (!exists(".bearer_env", envir = .state)) {
+    create_bearer_token(token)
+  }
   ## retrieve
   bearer_env <- get(".bearer_env", envir = .state)
   bearer <- tryCatch(get("bearer", envir = bearer_env), error = function(e) NULL)

@@ -2,12 +2,24 @@
 pblue <- function(x) {
     paste0("\033[38;5;110m", x, "\033[39m")
 }
+pmint <- function(x) {
+    paste0("\033[38;5;85m", x, "\033[39m")
+}
+ppink <- function(x) {
+    paste0("\033[38;5;198m", x, "\033[39m")
+}
+ppurp <- function(x) {
+    paste0("\033[38;5;99m", x, "\033[39m")
+}
 
-progress_bar <- function(its, fmt = "Working", width = getOption("width")) {
+progress_bar <- function(its, fmt = "Working", width = NULL) {
+    if (is.null(width)) {
+        width <- min(c(80, getOption("width", 80)), na.rm = TRUE)
+    }
     .pb <- new.env()
     assign("i", 0L, envir = .pb)
     assign("N", its, envir = .pb)
-    fmt <- paste0("...", fmt, "...", paste(rep(" ", max(c(1, 15 - nchar(fmt)))),
+    fmt <- paste0("..", fmt, "..", paste(rep(" ", max(c(1, 15 - nchar(fmt)))),
       collapse = ""), "[")
     mwidth <- width - nchar(fmt)
     assign("width", width, envir = .pb)
@@ -36,7 +48,6 @@ progress_bar <- function(its, fmt = "Working", width = getOption("width")) {
             width <- get("width", envir = .pb)
             if (i >= N) {
                 x <- pb_tick(expr, msg = msg, width = width)
-                #pb_clear_line(width)
             } else {
                 x <- pb_tick(expr, msg = msg, secs = pb_secs_rmn, width = width)
                 pb_clear_line(0)
@@ -56,15 +67,15 @@ pb_tick <- function(expr, msg = "=", secs = NULL, width = getOption("width")) {
         }
         sprmn <- width - nchar(msg) + 1L
         if (sprmn > 0) {
-            secsfmt <- paste0("[", paste(rep(" ", sprmn), collapse = ""), secsfmt)
-        } else {
-            secsfmt <- paste0("[", secsfmt)
+            secsfmt <- paste0(paste(rep(" ", sprmn), collapse = ""), secsfmt)
         }
-        msg <- paste0(msg, secsfmt)
-    } else {
-        msg <- paste0(msg, "]")
+        msg <- paste0(msg, ppurp(secsfmt))
     }
-    cat(pblue(msg))
+    m <- regexpr("\\[?\\=+\\]?", msg)
+    regmatches(msg, m) <- ppink(regmatches(msg, m))
+    m <- regexpr("\\S+", msg)
+    regmatches(msg, m) <- pmint(regmatches(msg, m))
+    cat(msg)
     x
 }
 pb_clear_line <- function(width = getOption("width")) {
@@ -78,6 +89,7 @@ pb_clear_line <- function(width = getOption("width")) {
 }
 
 pb_end <- function(width = getOption("width")) {
+    cat(ppink("]"))
     str <- "\n"
     cat(.makeMessage(str))
 }
