@@ -113,15 +113,13 @@ scroller <- function(url, n, n.times, type = NULL, ..., verbose = TRUE, safedir 
   }
 
   if (verbose) {
-    pb <- progress_bar(
-      n.times,
-      fmt = "downloading"
-    )
-    on.exit(pb_end(), add = TRUE)
+    pb <- pbr::pbr(n.times)
+    on.exit(pb$done(), add = TRUE)
   }
   for (i in seq_along(x)) {
     if (verbose) {
-      x[[i]] <- pb$tick(.GET(url, ...))
+      x[[i]] <- .GET(url, ...)
+      pb$tick()
     } else {
       x[[i]] <- .GET(url, ...)
     }
@@ -360,7 +358,7 @@ any_recursive <- function(x) {
   if (!is.recursive(x)) {
     return(FALSE)
   }
-  any(vapply(x, is.recursive, logical(1)))
+  any(vapply(x, is.recursive, FUN.VALUE = logical(1), USE.NAMES = FALSE))
 }
 
 is_response <- function(x) {
@@ -416,7 +414,8 @@ na_omit <- function(x) {
   if (is.atomic(x)) {
     x[!is.na(x)]
   } else {
-    x[!vapply(x, function(x) isTRUE(is.na(x)), FUN.VALUE = logical(1))]
+    x[!vapply(x, function(x) isTRUE(is.na(x)), USE.NAMES = FALSE,
+      FUN.VALUE = logical(1))]
   }
 }
 

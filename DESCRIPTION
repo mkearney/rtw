@@ -13,7 +13,8 @@ Imports:
     jsonlite (>= 0.9.22),
     utils,
     curl,
-    openssl
+    openssl,
+    pbr (>= 0.0.1)
 License: MIT + file LICENSE
 URL: https://github.com/mkearney/rtw
 BugReports: https://github.com/mkearney/rtw/issues
@@ -22,3 +23,5 @@ Suggests:
     testthat (>= 2.1.0)
 LazyData: yes
 RoxygenNote: 7.1.2
+Remotes:
+    mkearney/pbr

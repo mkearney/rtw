@@ -28,6 +28,36 @@ print.rtwibble <- function(x, n = 10, ...) {
     print.data.frame(p)
     return(invisible(x))
   }
+  vars <- names(x)
+  vars <- sub("favou?rites?", "favs", sub("followers", "flw", sub("friends", "fds", vars)))
+  vars <- sub("account_", "act_", sub("account_created", "act_crt", sub("_count", "_cnt", vars)))
+  vars <- unique(sub("(?<=quoted|reply_to|retweet|mentions|place|country|profile)_.*",
+    "_..", vars, perl = TRUE))
+  vars <- grep("_expanded|t\\.co|_type|coords_coords|bbox|protected|display_text", vars, invert = TRUE, value = TRUE)
+  vars <- unique(sub("_url", "", vars))
+  vars <- paste("*", vars)
+  if (length(vars) %% 4 == 1) {
+    vars <- c(vars, "", "", "")
+  }
+  if (length(vars) %% 4 == 2) {
+    vars <- c(vars, "", "")
+  }
+    if (length(vars) %% 4 == 3) {
+    vars <- c(vars, "")
+  }
+  v1 <- vars[seq_len(length(vars) / 4)]
+  v2 <- vars[(length(vars) / 4 + 1):(length(vars) / 4 * 2)]
+  v3 <- vars[(length(vars) / 4 * 2 + 1):(length(vars) / 4 * 3)]
+  v4 <- vars[!vars %in% v1 & !vars %in% v2 & !vars %in% v3]
+  chars <- max(nchar(v1)) - nchar(v1)
+  v1 <- paste0(v1, sapply(chars, function(.x) paste(rep(" ", .x), collapse = "")))
+  chars <- max(nchar(v2)) - nchar(v2)
+  v2 <- paste0(v2, sapply(chars, function(.x) paste(rep(" ", .x), collapse = "")))
+  chars <- max(nchar(v3)) - nchar(v3)
+  v3 <- paste0(v3, sapply(chars, function(.x) paste(rep(" ", .x), collapse = "")))
+  vars <- paste(v1, v2, v3, v4)
+  vars <- paste(vars, collapse = "\n")
+  #vars <- strwrap(paste(sort(vars), collapse = ";"), getOption("width"))
   p <- hd(x[, names(x) %in% c("created_at", "screen_name", "text")], n = n)
   w <- getOption("width", 80)
   w <- max(c(getOption("width", 80), 80))
@@ -43,6 +73,7 @@ print.rtwibble <- function(x, n = 10, ...) {
   p[["..."]] <- "."
   print.data.frame(p)
   cat("   ...\n", sep = "")
+  cat("Other variables:", vars, fill = TRUE)
   invisible(x)
 }
 

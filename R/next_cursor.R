@@ -216,11 +216,13 @@ max_id.list <- function(.x) {
   }
   if (is.null(names(.x)) &&
         any(vapply(.x, function(x) isTRUE("statuses" %in% names(x)),
-                   logical(1)))) {
+                   FUN.VALUE = logical(1), USE.NAMES = FALSE))) {
     .x <- lapply(.x, "[[", "statuses")
   }
-  if (is.null(names(.x)) && any(vapply(.x, is.recursive, logical(1)))) {
-    .x <- .x[lengths(.x) > 0L & vapply(.x, is.recursive, logical(1))]
+  if (is.null(names(.x)) && any(vapply(.x, is.recursive,
+      FUN.VALUE = logical(1), USE.NAMES = FALSE))) {
+    .x <- .x[lengths(.x) > 0L & vapply(.x, is.recursive,
+      FUN.VALUE = logical(1), USE.NAMES = FALSE)]
     .x <- .x[[length(.x)]]
   }
   if (isTRUE("statuses" %in% names(.x))) {
@@ -228,7 +230,8 @@ max_id.list <- function(.x) {
   }
   if (is.null(.x) || length(.x) == 0L) return(NULL)
   .x <- tryCatch(
-    as.data.frame(.x[!vapply(.x, is.recursive, logical(1))],
+    as.data.frame(.x[!vapply(.x, is.recursive, FUN.VALUE = logical(1),
+      USE.NAMES = FALSE)],
                   row.names = NULL, stringsAsFactors = FALSE),
     error = function(e) return(NULL)
   )
@@ -423,11 +426,13 @@ since_id.list <- function(.x) {
   }
   if (is.null(names(.x)) &&
       any(vapply(.x, function(x) isTRUE("statuses" %in% names(x)),
-        logical(1)))) {
+        FUN.VALUE = logical(1), USE.NAMES = FALSE))) {
     .x <- lapply(.x, "[[", "statuses")
   }
-  if (is.null(names(.x)) && any(vapply(.x, is.recursive, logical(1)))) {
-    .x <- .x[lengths(.x) > 0L & vapply(.x, is.recursive, logical(1))]
+  if (is.null(names(.x)) && any(vapply(.x, is.recursive,
+      FUN.VALUE = logical(1), USE.NAMES = FALSE))) {
+    .x <- .x[lengths(.x) > 0L & vapply(.x, is.recursive,
+      FUN.VALUE = logical(1), USE.NAMES = FALSE)]
     .x <- .x[[length(.x)]]
   }
   if (isTRUE("statuses" %in% names(.x))) {

@@ -284,7 +284,7 @@ tweets_to_tbl_ <- function(dat) {
   } else if (has_name_(dat, "screen_name") && has_name_(dat, "id_str")) {
     dat$user_id <- dat[["id_str"]]
     dat$id_str <- NULL
-    
+
   } else {
     dat$user_id <- NA_character_
     dat$screen_name <- NA_character_
@@ -517,7 +517,8 @@ display_text_range <- function(x) {
   if (has_name_(x, "display_text_range")) {
     vapply(
       x$display_text_range,
-      function(x) ifelse(is.null(x), NA_integer_, diff(x)), double(1))
+      function(x) ifelse(is.null(x), NA_integer_, diff(x)),
+      FUN.VALUE = double(1), USE.NAMES = FALSE)
   } else {
     rep(NA_integer_, nrow(x))
   }
