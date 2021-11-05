@@ -52,12 +52,15 @@ lookup_statuses_ <- function(statuses,
   n.times <- ceiling(length(statuses) / 100)
   from <- 1
   twt <- vector("list", n.times)
+  pb <- pbr::pbr(n.times)
+  on.exit(pb$done(), add = TRUE)
   for (i in seq_len(n.times)) {
     to <- from + 99
     if (to > length(statuses)) {
       to <- length(statuses)
     }
     twt[[i]] <- .status_lookup(statuses[from:to], token = token)
+    pb$tick()
     from <- to + 1
     if (from > length(statuses)) break
   }
